@@ -1,75 +1,85 @@
-
 namespace api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
 public class AccountController : ControllerBase
 {
-    private readonly IMongoCollection<Signup> _collection;
-    // Dependency Injection
-    public AccountController(IMongoClient client, IMongoDbSettings dbSettings)
-    {
-        var dbName = client.GetDatabase(dbSettings.DatabaseName);
-        _collection = dbName.GetCollection<Signup>("users");
-    }
+    private readonly IAccountRepository _accountRepository;
 
+    public AccountController(IAccountRepository accountRepository)
+    {
+        _accountRepository = accountRepository;
+    }
+    /// <summary>
+    /// Create Accounts
+    /// Concurrency => async is used
+    /// </summary>
+    /// <param name="userInput"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>UserDto</returns>
     [HttpPost("register")]
-    public ActionResult<Signup> Create(Signup userInput)
+    public async Task<ActionResult<UserDto>> Register(RegisterDto userInput, CancellationToken cancellationToken)
     {
-        bool hasDocs = _collection.AsQueryable().Where<Signup>(p => p.Name == userInput.Name).Any();
+        if (userInput.Password != userInput.ConfirmPassword)
+            return BadRequest("Passwords don't match!");
 
-        if (hasDocs)
-            return BadRequest($"A User with Name {userInput.Name} is already registered.");
+        UserDto? userDto = await _accountRepository.Create(userInput, cancellationToken);
 
-        Signup user = new Signup(
-            Id: null,
-            Name: userInput.Name?.Trim(),
-            Email: userInput.Email.ToLower().Trim(),
-            Password: userInput.Password.Trim(),
-            ConfirmPassword: userInput.ConfirmPassword.Trim()
-        );
+        if (userDto is null)
+            return BadRequest("Email/Username is taken.");
 
-        _collection.InsertOne(user);
-
-        return user;
+        return userDto;
     }
 
+    /// <summary>
+    /// Login Accounts
+    /// Concurrency => async is used
+    /// </summary>
+    /// <param name="userInput"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>UserDto</returns>
     [HttpPost("login")]
-    public ActionResult<Signup> Login(Login userInput)
+    public async Task<ActionResult<UserDto>> Login(LoginDto userInput, CancellationToken cancellationToken)
     {
-        Signup user = _collection.Find<Signup>(doc => doc.Email == userInput.Email && doc.Password == userInput.Password).FirstOrDefault();
+        UserDto? userDto = await _accountRepository.Login(userInput, cancellationToken);
 
-        if (user is null)
+        if (userDto is null)
             return Unauthorized("Wrong username or password");
 
-        return user;
+        return userDto;
     }
 
-    [HttpGet("get-all")]
-    public ActionResult<IEnumerable<Signup>> GetAll()
-    {
-        List<Signup> signUps = _collection.Find<Signup>(new BsonDocument()).ToList();
-
-        if (!signUps.Any())
-            return NoContent();
-
-        return signUps;
-    }
-
+    /// <summary>
+    /// Update Accounts
+    /// Concurrency => async is used
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="registerDto"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>UpdateResult</returns>
     [HttpPut("update/{userId}")]
-    public ActionResult<UpdateResult> UpdateUserById(string userId, Signup signUpIn)
+    public async Task<ActionResult<UpdateResult?>> UpdateUserById(string userId, RegisterDto userInput, CancellationToken cancellationToken)
     {
-        var UpdatedUser = Builders<Signup>.Update
-        .Set((Signup doc) => doc.Name, signUpIn.Name)
-        .Set(doc => doc.Email, signUpIn.Email.ToLower().Trim())
-        .Set(doc => doc.Password, signUpIn.Password);
+        if (userInput.Password != userInput.ConfirmPassword)
+            return BadRequest("Password don't match!");
 
-        return _collection.UpdateOne<Signup>(doc => doc.Id == userId, UpdatedUser);
+        UpdateResult? updateResult = await _accountRepository.Update(userId, userInput, cancellationToken);
+
+        return updateResult;
     }
 
+    /// <summary>
+    /// Delete Accounts
+    /// Concurrency => async is used
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>DeleteResult</returns>
     [HttpDelete("delete/{userId}")]
-    public ActionResult<DeleteResult> DeleteUserById(string userId)
+    public async Task<ActionResult<DeleteResult?>> DeleteUserById(string userId, CancellationToken cancellationToken)
     {
-        return _collection.DeleteOne<Signup>(doc => doc.Id == userId);
+        DeleteResult? deleteResult = await _accountRepository.Delete(userId, cancellationToken);
+
+        return deleteResult;
     }
 }

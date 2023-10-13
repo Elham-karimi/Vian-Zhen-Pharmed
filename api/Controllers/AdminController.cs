@@ -37,4 +37,19 @@ public class AdminController : ControllerBase
 
         return admin;
     }
+
+
+
+       [HttpGet("get-all")]
+    public ActionResult<IEnumerable<Signup>> GetAll()
+    {
+        List<Signup> signUps = _collection.Find<Signup>(new BsonDocument()).ToList();
+
+        if (!signUps.Any())
+            return NoContent();
+
+        return signUps;
+    }
+
+
 }
