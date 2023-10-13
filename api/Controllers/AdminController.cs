@@ -4,52 +4,46 @@ namespace api.Controllers;
 [Route("api/[controller]")]
 public class AdminController : ControllerBase
 {
-    private readonly IMongoCollection<AppUser> _collection;
-    // Dependency Injection
-    public AdminController(IMongoClient client, IMongoDbSettings dbSettings)
+    private readonly IAdminRepository _adminRepository;
+
+    public AdminController(IAdminRepository adminRepository)
     {
-        var dbName = client.GetDatabase(dbSettings.DatabaseName);
-        _collection = dbName.GetCollection<AppUser>("admins");
+        _adminRepository = adminRepository;
     }
 
-    [HttpPost("register")]
-    public ActionResult<AppUser> Create(AppUser adminIn)
+    //  <summary>
+    /// GetAll Users
+    /// Concurrency => async is used
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns>IEnumerable<AppUser></returns>
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<AppUser?>>> GetAll(CancellationToken cancellationToken)
     {
-        AppUser admin = new AppUser(
-            Id: null,
-            Email: adminIn.Email,
-            Password: adminIn.Password,
-            ConfirmPassword: adminIn.ConfirmPassword
-        );
+        List<AppUser>? appUsers = await _adminRepository.GetAll(cancellationToken);
 
-        _collection.InsertOne(admin);
-
-        return admin;
-    }
-
-    [HttpPost("login")]
-    public ActionResult<AppUser> Login(AppUser adminIn)
-    {
-        AppUser admin = _collection.Find<AppUser>(doc => doc.Email == adminIn.Email && doc.Password == adminIn.Password).FirstOrDefault();
-
-        if (admin is null)
-            return Unauthorized("Wrong username or password");
-
-        return admin;
-    }
-
-
-
-       [HttpGet("get-all")]
-    public ActionResult<IEnumerable<Signup>> GetAll()
-    {
-        List<Signup> signUps = _collection.Find<Signup>(new BsonDocument()).ToList();
-
-        if (!signUps.Any())
+        if (!appUsers.Any())
             return NoContent();
 
-        return signUps;
+        return appUsers;
     }
 
+    /// <summary>
+    ///Get User By Id
+    ///Concurrency => async is used
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>AppUser</returns>
+    [HttpGet("get-by-id/{userId}")]
+    public async Task<ActionResult<AppUser>> GetUserById(string userId, CancellationToken cancellationToken)
+    {
 
+        AppUser appUser = await _adminRepository.Get(userId, cancellationToken);
+
+        if (appUser is null)
+            return NotFound("No user with This Id found");
+
+        return appUser;
+    }
 }
