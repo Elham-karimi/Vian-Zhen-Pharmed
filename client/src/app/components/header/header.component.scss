@@ -1,0 +1,37 @@
+@font-face {
+    font-family: 'nazanin';
+    src: url('../../../assets/Fonts/Nazanin.ttf');
+}
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 4px 16px;
+    top: 0;
+    background-color: rgb(51, 129, 51);
+    width: 100%;
+    color: white;
+
+    .img-header{
+        padding-left: 30px;
+    }
+    .menu-header{
+        // direction: rtl;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        // color: white;
+
+        a{
+            text-decoration: none;
+           
+        }
+        .sub-menu ul{
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}

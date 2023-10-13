@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@angular/platform-browser": "^16.2.0",
+    "font-awesome": "^4.7.0",
+    "ngx-sharebuttons": "^13.0.0"
+  }
+}

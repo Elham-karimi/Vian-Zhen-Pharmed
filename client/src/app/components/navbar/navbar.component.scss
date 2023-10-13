@@ -1,0 +1,19 @@
+mat-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color : rgb(101, 161, 101);
+    a {
+        // border: 2px solid black;
+        text-decoration: none;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Nazanin';
+        font: weight 100px;
+        // position: relative;
+        // left: 65rem;
+    }
+}
+
