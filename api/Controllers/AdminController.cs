@@ -4,18 +4,18 @@ namespace api.Controllers;
 [Route("api/[controller]")]
 public class AdminController : ControllerBase
 {
-    private readonly IMongoCollection<Admin> _collection;
+    private readonly IMongoCollection<AppUser> _collection;
     // Dependency Injection
     public AdminController(IMongoClient client, IMongoDbSettings dbSettings)
     {
         var dbName = client.GetDatabase(dbSettings.DatabaseName);
-        _collection = dbName.GetCollection<Admin>("admins");
+        _collection = dbName.GetCollection<AppUser>("admins");
     }
 
     [HttpPost("register")]
-    public ActionResult<Admin> Create(Admin adminIn)
+    public ActionResult<AppUser> Create(AppUser adminIn)
     {
-        Admin admin = new Admin(
+        AppUser admin = new AppUser(
             Id: null,
             Email: adminIn.Email,
             Password: adminIn.Password,
@@ -28,9 +28,9 @@ public class AdminController : ControllerBase
     }
 
     [HttpPost("login")]
-    public ActionResult<Admin> Login(Admin adminIn)
+    public ActionResult<AppUser> Login(AppUser adminIn)
     {
-        Admin admin = _collection.Find<Admin>(doc => doc.Email == adminIn.Email && doc.Password == adminIn.Password).FirstOrDefault();
+        AppUser admin = _collection.Find<AppUser>(doc => doc.Email == adminIn.Email && doc.Password == adminIn.Password).FirstOrDefault();
 
         if (admin is null)
             return Unauthorized("Wrong username or password");
