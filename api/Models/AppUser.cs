@@ -5,5 +5,5 @@ public record AppUser(
     string Email,
     string Password,
     string ConfirmPassword,
-    string City
+    City City
 );
