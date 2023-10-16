@@ -1,8 +1,6 @@
 namespace api.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class AccountController : ControllerBase
+public class AccountController : BaseApiController
 {
     private readonly IAccountRepository _accountRepository;
 

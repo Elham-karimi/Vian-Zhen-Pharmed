@@ -1,8 +1,7 @@
 namespace api.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class ProductController : ControllerBase
+
+public class ProductController : BaseApiController
 {
     private readonly IMongoCollection<Product> _collection;
     //Dependency Injection
