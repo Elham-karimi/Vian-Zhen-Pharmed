@@ -21,7 +21,7 @@ public class AccountController : BaseApiController
         if (userInput.Password != userInput.ConfirmPassword)
             return BadRequest("Passwords don't match!");
 
-        UserDto? userDto = await _accountRepository.Create(userInput, cancellationToken);
+        UserDto? userDto = await _accountRepository.CreateAsync(userInput, cancellationToken);
 
         if (userDto is null)
             return BadRequest("Email/Username is taken.");
@@ -39,7 +39,7 @@ public class AccountController : BaseApiController
     [HttpPost("login")]
     public async Task<ActionResult<UserDto>> Login(LoginDto userInput, CancellationToken cancellationToken)
     {
-        UserDto? userDto = await _accountRepository.Login(userInput, cancellationToken);
+        UserDto? userDto = await _accountRepository.LoginAsync(userInput, cancellationToken);
 
         if (userDto is null)
             return Unauthorized("Wrong username or password");
@@ -61,7 +61,7 @@ public class AccountController : BaseApiController
         if (userInput.Password != userInput.ConfirmPassword)
             return BadRequest("Password don't match!");
 
-        UpdateResult? updateResult = await _accountRepository.Update(userId, userInput, cancellationToken);
+        UpdateResult? updateResult = await _accountRepository.UpdateAsync(userId, userInput, cancellationToken);
 
         return updateResult;
     }
@@ -76,7 +76,7 @@ public class AccountController : BaseApiController
     [HttpDelete("delete/{userId}")]
     public async Task<ActionResult<DeleteResult?>> DeleteUserById(string userId, CancellationToken cancellationToken)
     {
-        DeleteResult? deleteResult = await _accountRepository.Delete(userId, cancellationToken);
+        DeleteResult? deleteResult = await _accountRepository.DeleteAsync(userId, cancellationToken);
 
         return deleteResult;
     }

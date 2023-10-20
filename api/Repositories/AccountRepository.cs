@@ -11,7 +11,7 @@ public class AccountRepository : IAccountRepository
         _collection = dbName.GetCollection<AppUser>(_collectionName);
     }
 
-    public async Task<UserDto?> Create(RegisterDto userInput, CancellationToken cancellationToken)
+    public async Task<UserDto?> CreateAsync(RegisterDto userInput, CancellationToken cancellationToken)
     {
         bool doesAccountExist = await _collection.Find<AppUser>(user =>
              user.Email == userInput.Email.ToLower().Trim()).AnyAsync(cancellationToken);
@@ -32,9 +32,9 @@ public class AccountRepository : IAccountRepository
 
         if (appUser.Id is not null)
         {
-            UserDto userDto = new UserDto(
-                Id: appUser.Id,
-                Email: appUser.Email
+            DTOs.UserDto userDto = new DTOs.UserDto(
+                Id: (string)appUser.Id,
+                Email: (string)appUser.Email
             );
 
             return userDto;
@@ -43,7 +43,7 @@ public class AccountRepository : IAccountRepository
         return null;
     }
 
-    public async Task<UserDto?> Login(LoginDto userInput, CancellationToken cancellationToken)
+    public async Task<UserDto?> LoginAsync(LoginDto userInput, CancellationToken cancellationToken)
     {
         AppUser appUser = await _collection.Find<AppUser>(user =>
         user.Email == userInput.Email.ToLower().Trim()
@@ -55,8 +55,8 @@ public class AccountRepository : IAccountRepository
         if (appUser.Id is not null)
         {
             UserDto userDto = new UserDto(
-                Id: appUser.Id,
-                Email: appUser.Email
+                Id: (string)appUser.Id,
+                Email: (string)appUser.Email
             );
 
             return userDto;
@@ -65,10 +65,10 @@ public class AccountRepository : IAccountRepository
         return null;
     }
 
-    public async Task<UpdateResult?> Update(string userId, RegisterDto userInput, CancellationToken cancellationToken)
+    public async Task<UpdateResult?> UpdateAsync(string userId, RegisterDto userInput, CancellationToken cancellationToken)
     {
-        var updatedUser = Builders<AppUser>.Update
-        .Set((AppUser user) => user.Email, userInput.Email.ToLower().Trim())
+        var updatedUser = Builders<RegisterDto>.Update
+        .Set((RegisterDto user) => user.Email, userInput.Email.ToLower().Trim())
         .Set(user => user.Password, userInput.Password.Trim())
         .Set(user => user.ConfirmPassword, userInput.ConfirmPassword.Trim())
         .Set(user => user.City, userInput.City);
@@ -79,7 +79,7 @@ public class AccountRepository : IAccountRepository
         return null;
     }
 
-    public async Task<DeleteResult?> Delete(string userId, CancellationToken cancellationToken)
+    public async Task<DeleteResult?> DeleteAsync(string userId, CancellationToken cancellationToken)
     {
         if (_collection is not null)
             return await _collection.DeleteOneAsync(userId, null, cancellationToken);
