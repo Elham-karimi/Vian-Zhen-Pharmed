@@ -3,24 +3,24 @@ namespace api.Repositories;
 public class AdminRepository : IAdminRepository
 {
     private const string _collectionName = "users";
-    private readonly IMongoCollection<AppUser>? _collection;
-    
+    private readonly IMongoCollection<Models.UserDto>? _collection;
+
     public AdminRepository(IMongoClient client, IMongoDbSettings dbSettings)
     {
         var dbName = client.GetDatabase(dbSettings.DatabaseName);
-        _collection = dbName.GetCollection<AppUser>(_collectionName);
+        _collection = dbName.GetCollection<Models.UserDto>(_collectionName);
     }
 
-    public async Task<IEnumerable<AppUser>> GetAll (CancellationToken cancellationToken)
+    public async Task<List<UserDto>> GetAllAsync(CancellationToken cancellationToken)
     {
-        List<AppUser> appUsers = await _collection.Find<AppUser>(new BsonDocument()).ToListAsync(cancellationToken);
+        List<UserDto> appUsers = await _collection.Find<UserDto>(new BsonDocument()).ToListAsync(cancellationToken);
 
         return appUsers;
     }
 
-    public async Task<AppUser> Get(string userId, CancellationToken cancellationToken)
+    public async Task<UserDto> GetUserbyIdAsync(string userId, CancellationToken cancellationToken)
     {
-        AppUser appUser = await _collection.Find<AppUser>(user => user.Id == userId).FirstOrDefaultAsync(cancellationToken);
+        UserDto appUser = await _collection.Find<UserDto>(user => user.Id == userId).FirstOrDefaultAsync(cancellationToken);
 
         return appUser;
     }
