@@ -1,5 +1,3 @@
-
-
 namespace api.Repositories;
 
 public class ProductRepository : IProductRepository
@@ -43,7 +41,7 @@ public class ProductRepository : IProductRepository
 
     public async Task<Product?> GetByNameAsync(string productName, CancellationToken cancellationToken)
     {
-        Product product = await _collection.Find<Product>(pro => pro.Name == productName).FirstOrDefaultAsync();
+        Product product = await _collection.Find<Product>(pro => pro.Name == productName).FirstOrDefaultAsync(cancellationToken);
 
         if (product is null)
             return null;
@@ -61,7 +59,7 @@ public class ProductRepository : IProductRepository
         return products;
     }
 
-    public async Task<UpdateResult?> UpdateByIdAsync(string prodectId, Product productIn, CancellationToken cancellationToken)
+    public async Task<UpdateResult?> UpdateByIdAsync(string productId, Product productIn, CancellationToken cancellationToken)
     {
         var updatedProduct = Builders<Product>.Update
        .Set((Product doc) => doc.Name, productIn.Name)
