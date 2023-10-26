@@ -56,7 +56,7 @@ public class AccountController : BaseApiController
     /// <param name="cancellationToken"></param>
     /// <returns>UpdateResult</returns>
     [HttpPut("update/{userId}")]
-    public async Task<ActionResult<UpdateResult?>> UpdateUserById(string userId, RegisterDto userInput, CancellationToken cancellationToken)
+    public async Task<ActionResult<UpdateResult?>> UpdateUserById(string userId, AppUser userInput, CancellationToken cancellationToken)
     {
         if (userInput.Password != userInput.ConfirmPassword)
             return BadRequest("Password don't match!");

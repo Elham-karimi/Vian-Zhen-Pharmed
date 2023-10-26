@@ -32,7 +32,7 @@ public class AccountRepository : IAccountRepository
 
         if (appUser.Id is not null)
         {
-            DTOs.UserDto userDto = new DTOs.UserDto(
+            UserDto userDto = new UserDto(
                 Id: (string)appUser.Id,
                 Email: (string)appUser.Email
             );
@@ -65,13 +65,13 @@ public class AccountRepository : IAccountRepository
         return null;
     }
 
-    public async Task<UpdateResult?> UpdateAsync(string userId, RegisterDto userInput, CancellationToken cancellationToken)
+    public async Task<UpdateResult?> UpdateAsync(string userId, AppUser appUser, CancellationToken cancellationToken)
     {
-        var updatedUser = Builders<RegisterDto>.Update
-        .Set((RegisterDto user) => user.Email, userInput.Email.ToLower().Trim())
-        .Set(user => user.Password, userInput.Password.Trim())
-        .Set(user => user.ConfirmPassword, userInput.ConfirmPassword.Trim())
-        .Set(user => user.City, userInput.City);
+        var updatedUser = Builders<AppUser>.Update
+        .Set((AppUser user) => user.Email, appUser.Email.ToLower().Trim())
+        .Set(user => user.Password, appUser.Password.Trim())
+        .Set(user => user.ConfirmPassword, appUser.ConfirmPassword.Trim())
+        .Set(user => user.City, appUser.City);
 
         if (_collection is not null)
             return await _collection.UpdateOneAsync(userId, updatedUser, null, cancellationToken);

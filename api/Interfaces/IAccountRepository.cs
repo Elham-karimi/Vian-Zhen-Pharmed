@@ -6,7 +6,7 @@ public interface IAccountRepository
 
     public Task<UserDto?> LoginAsync(LoginDto userInput, CancellationToken cancellationToken);
 
-    public Task<UpdateResult?> UpdateAsync(string userId, RegisterDto registerDto,CancellationToken cancellationToken);
+    public Task<UpdateResult?> UpdateAsync(string userId, AppUser appUser,CancellationToken cancellationToken);
 
     public Task<DeleteResult?> DeleteAsync(string userId, CancellationToken cancellationToken);
 }
