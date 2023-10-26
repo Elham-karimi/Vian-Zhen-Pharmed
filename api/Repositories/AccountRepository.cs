@@ -33,8 +33,8 @@ public class AccountRepository : IAccountRepository
         if (appUser.Id is not null)
         {
             UserDto userDto = new UserDto(
-                Id: (string)appUser.Id,
-                Email: (string)appUser.Email
+                Id: appUser.Id,
+                Email: appUser.Email
             );
 
             return userDto;
@@ -55,8 +55,8 @@ public class AccountRepository : IAccountRepository
         if (appUser.Id is not null)
         {
             UserDto userDto = new UserDto(
-                Id: (string)appUser.Id,
-                Email: (string)appUser.Email
+                Id: appUser.Id,
+                Email: appUser.Email
             );
 
             return userDto;
