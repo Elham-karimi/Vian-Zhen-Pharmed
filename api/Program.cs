@@ -35,10 +35,17 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
+# region Dependency Injection
+
+builder.Services.AddScoped<IAccountRepository , AccountRepository>();
+builder.Services.AddScoped<IAdminRepository , AdminRepository>();
+builder.Services.AddScoped<IProductRepository , ProductRepository>();
+
+#endregion Dependency Injection
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-
 
 app.UseHttpsRedirection();
 
