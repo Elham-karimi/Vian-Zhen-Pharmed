@@ -43,9 +43,9 @@ public class ProductController : BaseApiController
     }
 
     [HttpPut("update/{productId}")]
-    public async Task<ActionResult<UpdateResult>> UpdateProductById(string productId, Product productIn, CancellationToken cancellationToken)
+    public async Task<ActionResult<UpdateResult?>> UpdateProductById(string productId, Product productIn, CancellationToken cancellationToken)
     {
-       UpdateResult updateResult =await _productRepository.UpdateByIdAsync(productId, productIn, cancellationToken);
+       UpdateResult? updateResult =await _productRepository.UpdateByIdAsync(productId, productIn, cancellationToken);
 
        return updateResult;
     }

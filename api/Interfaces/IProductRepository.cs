@@ -8,7 +8,7 @@ public interface IProductRepository
 
     public Task<List<Product>> GetAllAsync(CancellationToken cancellationToken);
 
-    public Task<UpdateResult> UpdateByIdAsync(string productId,Product product, CancellationToken cancellationToken);
+    public Task<UpdateResult?> UpdateByIdAsync(string productId,Product product, CancellationToken cancellationToken);
     
     public Task<DeleteResult> DeleteByIdAsync(string productId, CancellationToken cancellationToken);
 }

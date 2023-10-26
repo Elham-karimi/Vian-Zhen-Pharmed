@@ -61,7 +61,7 @@ public class ProductRepository : IProductRepository
         return products;
     }
 
-    public async Task<UpdateResult> UpdateByIdAsync(string prodectId, Product productIn, CancellationToken cancellationToken)
+    public async Task<UpdateResult?> UpdateByIdAsync(string prodectId, Product productIn, CancellationToken cancellationToken)
     {
         var updatedProduct = Builders<Product>.Update
        .Set((Product doc) => doc.Name, productIn.Name)
