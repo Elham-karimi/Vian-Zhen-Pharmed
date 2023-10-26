@@ -10,53 +10,52 @@ public class ProductController : BaseApiController
     }
 
     [HttpPost("add-product")]
-    public async Task<ActionResult<Product>> Create(Product product)
+    public async Task<ActionResult<Product>> Register(Product product, CancellationToken cancellationToken)
     {
-       
+       Product? product1 = await _productRepository.CreateAsync(product,cancellationToken);
+
+       if(product1 is null)
+        return BadRequest("This product has already been Registered");
+
+        return product1;
     }
 
     [HttpGet("get-by-name/{productName}")]
-    public ActionResult<Product> GetByName(string productName)
+    public async Task<ActionResult<Product>> GetByName(string productName, CancellationToken cancellationToken)
     {
-        Product product = _collection.Find<Product>(doc => doc.Name == productName).FirstOrDefault();
+        Product? product = await _productRepository.GetByNameAsync(productName , cancellationToken);
 
-        if (product == null)
-        {
+        if (product is null)
             return NotFound("The Desired Product was not Found.");
-        }
+        
         return product;
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Product>> GetAll()
+    public async Task<ActionResult<IEnumerable<Product?>>> GetAll(CancellationToken cancellationToken)
     {
-        List<Product> products = _collection.Find<Product>(new BsonDocument()).ToList();
+        List<Product> products = await _productRepository.GetAllAsync(cancellationToken);
 
         if (!products.Any())
-        {
             return NoContent();
-        }
+        
         return products;
     }
-    [HttpPut("update/{prodectId}")]
-    public ActionResult<UpdateResult> UpdateProductById(string productId, Product productIn)
-    {
-        var updatedProduct = Builders<Product>.Update
-        .Set((Product doc) => doc.Name, productIn.Name)
-        .Set(doc => doc.ShortDescription, productIn.ShortDescription)
-        .Set(doc => doc.SpecificSpecification.ProductType, productIn.SpecificSpecification.ProductType)
-        .Set(doc => doc.SpecificSpecification.ConsumerGroup, productIn.SpecificSpecification.ConsumerGroup)
-        .Set(doc => doc.SpecificSpecification.UsageCases, productIn.SpecificSpecification.UsageCases)
-        .Set(doc => doc.SpecificSpecification.Dosage, productIn.SpecificSpecification.Dosage)
-        .Set(doc => doc.SpecificSpecification.Combination, productIn.SpecificSpecification.Combination);
 
-        return _collection.UpdateOne<Product>(doc => doc.Id == productId, updatedProduct);
+    [HttpPut("update/{productId}")]
+    public async Task<ActionResult<UpdateResult>> UpdateProductById(string productId, Product productIn, CancellationToken cancellationToken)
+    {
+       UpdateResult updateResult =await _productRepository.UpdateByIdAsync(productId, productIn, cancellationToken);
+
+       return updateResult;
     }
 
     [HttpDelete("delete/{productId}")]
-    public ActionResult<DeleteResult> Delete(string prodectId)
+    public async Task<ActionResult<DeleteResult>> DeleteProductById(string productId, CancellationToken cancellationToken)
     {
-        return _collection.DeleteOne<Product>(doc => doc.Id == prodectId);
+        DeleteResult deleteResult = await _productRepository.DeleteByIdAsync(productId,cancellationToken);
+
+        return deleteResult;
     }
 }
 
