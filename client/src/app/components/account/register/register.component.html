@@ -1,0 +1,30 @@
+<form [formGroup]="signupFg">
+    <h2> ثبت نام کاربر جدید</h2>
+    <mat-form-field appearance="outline">
+        <mat-label>نام و نام خانوادگی</mat-label>
+        <input type="text" formControlName="nameCtrl" placeholder="نام خود را وارد کنید" matInput>
+        <mat-error>This field is required.</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>ایمیل</mat-label>
+        <input type="text" formControlName="emailCtrl" placeholder="ایمیل خود را وارد کنید" matInput>
+        <mat-error>This field is required.</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>پسورد</mat-label>
+        <input type="text" formControlName="passwordCtrl" placeholder="پسورد خود را وارد کنید" matInput>
+        <mat-error>This field is required.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>شهر </mat-label>
+        <mat-select formControlName="cityCtrl">
+            <mat-option *ngFor="let city of cities" [value]="city">
+                {{city}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <button type="submit" (click)="registerUser()" [disabled]="signupFg.invalid" mat-raised-button color="primary">
+        ثبت نام
+    </button>
+</form>
