@@ -24,7 +24,10 @@ public class AccountRepository : IAccountRepository
             Email: userInput.Email.ToLower().Trim(),
             Password: userInput.Password.Trim(),
             ConfirmPassword: userInput.ConfirmPassword.Trim(),
-            City: userInput.City
+            City: new City(
+                Id: null,
+                StateName : userInput.City.StateName
+            )
         );
 
         if (_collection is not null)

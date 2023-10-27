@@ -10,9 +10,7 @@ public class AccountController : BaseApiController
     }
     /// <summary>
     /// Create Accounts
-    /// Concurrency => async is used
-    /// </summary>
-    /// <param name="userInput"></param>
+    /// Concurrenapi/Controllers/AccountController.cs"userInput"></param>
     /// <param name="cancellationToken"></param>
     /// <returns>UserDto</returns>
     [HttpPost("register")]
