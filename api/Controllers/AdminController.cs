@@ -37,7 +37,7 @@ public class AdminController : BaseApiController
     public async Task<ActionResult<UserDto>> GetUserById(string userId, CancellationToken cancellationToken)
     {
 
-        UserDto userDto = await _adminRepository.GetَUserbyIdAsync(userId, cancellationToken);
+        UserDto? userDto = await _adminRepository.GetَUserbyIdAsync(userId, cancellationToken);
 
         if (userDto is null)
             return NotFound("No user with This Id found");
