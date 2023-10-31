@@ -1,23 +1,16 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
-import { ComponentsComponent } from './components/components.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { HomeComponent } from './components/home/home.component';
-import { FooterComponent } from './components/footer/footer.component';
 
-import { MatMenuModule } from '@angular/material/menu';
-import { HeaderComponent } from './components/header/header.component';
-import { AddUserComponent } from './components/add-user/add-user.component';
-import { NotFoundComponent } from './components/not-found/not-found.component';
-import { ListCitiesComponent } from './components/list-cities/list-cities.component';
+// Forms
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+
+// CRUD
+import { HttpClientModule } from '@angular/common/http';
 
 //Materials
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -27,9 +20,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { ListProductsComponent } from './components/list-products/list-products.component';
-import { UserLoginComponent } from './components/user-login/user-login.component';
+import { MatMenuModule } from '@angular/material/menu';
+
+// Fonts
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+
+// Components
+import { ListProductsComponent } from './components/list-products/list-products.component';
 import { MareVitaminSupplementComponent } from './components/mare-vitamin-supplement/mare-vitamin-supplement.component';
 import { ColtVitaminSupplementComponent } from './components/colt-vitamin-supplement/colt-vitamin-supplement.component';
 import { SportHorsesVitaminSupplementComponent } from './components/sport-horses-vitamin-supplement/sport-horses-vitamin-supplement.component';
@@ -41,8 +38,16 @@ import { VianAmbassadorsComponent } from './components/vian-ambassadors/vian-amb
 import { ContactusComponent } from './components/contactus/contactus.component';
 import { ElementorSpacerComponent } from './components/elementor-spacer/elementor-spacer.component';
 import { ImageSliderComponent } from './components/image-slider/image-slider.component';
-// import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+import { RegisterComponent } from './components/account/register/register.component';
+import { LoginComponent } from './components/account/login/login.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { HomeComponent } from './components/home/home.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ListCitiesComponent } from './components/list-cities/list-cities.component';
 
+// import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 // import { library as legacyLibrary } from '@fortawesome/fontawesome-svg-core';
 // import { 	fa-user-alt } from '@fortawesome/free-solid-svg-icons';
 
@@ -50,16 +55,13 @@ import { ImageSliderComponent } from './components/image-slider/image-slider.com
 @NgModule({
   declarations: [
     AppComponent,
-    ComponentsComponent,
     NavbarComponent,
     HomeComponent,
     FooterComponent,
     HeaderComponent,
-    AddUserComponent,
     NotFoundComponent,
     ListCitiesComponent,
     ListProductsComponent,
-    UserLoginComponent,
     MareVitaminSupplementComponent,
     ColtVitaminSupplementComponent,
     SportHorsesVitaminSupplementComponent,
@@ -71,6 +73,8 @@ import { ImageSliderComponent } from './components/image-slider/image-slider.com
     ContactusComponent,
     ElementorSpacerComponent,
     ImageSliderComponent,
+    RegisterComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
