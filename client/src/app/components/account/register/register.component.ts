@@ -8,11 +8,11 @@ import {NgFor, NgIf} from '@angular/common';
 import {MatSelectModule} from '@angular/material/select';
 
 @Component({
-  selector: 'app-add-user',
-  templateUrl: './add-user.component.html',
-  styleUrls: ['./add-user.component.scss']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss']
 })
-export class AddUserComponent {
+export class RegisterComponent {
   signupRes: SignUp | undefined;
   cities: City[] | undefined;
 

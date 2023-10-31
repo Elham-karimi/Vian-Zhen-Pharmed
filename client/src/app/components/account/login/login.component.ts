@@ -7,11 +7,11 @@ import { Login } from 'src/app/models/login.model';
 import { SignUp } from 'src/app/models/signup.model';
 
 @Component({
-  selector: 'app-user-login',
-  templateUrl: './user-login.component.html',
-  styleUrls: ['./user-login.component.scss']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
-export class UserLoginComponent {
+export class LoginComponent {
   loginRes: SignUp | undefined;
 
   constructor(private fb: FormBuilder, private http: HttpClient) { }
