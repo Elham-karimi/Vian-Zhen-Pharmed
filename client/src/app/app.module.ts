@@ -80,12 +80,16 @@ import { ListCitiesComponent } from './components/list-cities/list-cities.compon
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatMenuModule,
-
+   
+    // CRUD
     HttpClientModule,
+
+    // Form
     FormsModule,
     ReactiveFormsModule,
 
+    // Material
+    MatMenuModule,
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
@@ -93,6 +97,8 @@ import { ListCitiesComponent } from './components/list-cities/list-cities.compon
     MatToolbarModule,
     MatIconModule,
     MatSelectModule,
+
+    // Font
     FontAwesomeModule,
     // ShareButtonsModule,
   ],
