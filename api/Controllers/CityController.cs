@@ -1,26 +1,17 @@
 namespace api.Controllers;
 
-
 public class CityController : BaseApiController
 {
-    private readonly IMongoCollection<City> _collection;
+    private readonly ICityRepository _cityRepository;
     //Dependency Injection
-    public CityController(IMongoClient client, IMongoDbSettings dbSettings)
+    public CityController(ICityRepository cityRepository)
     {
-         var dbName = client.GetDatabase(dbSettings.DatabaseName);
-        _collection = dbName.GetCollection<City>("cities");
+       _cityRepository = cityRepository;
     }
     [HttpPost("add-city")]
-    public ActionResult<City> Create(City userInput)
+    public async Task<ActionResult<City>> Create(City userInput,CancellationToken cancellationToken)
     {
-        City city = new City(
-            Id : null,
-            StateName : userInput.StateName
-        );
-
-        _collection.InsertOne(city);
-
-        return city;
+     
     }
 
     [HttpGet("get-all-cities")]
