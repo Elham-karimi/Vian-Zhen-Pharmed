@@ -9,9 +9,9 @@ public class CityController : BaseApiController
        _cityRepository = cityRepository;
     }
     [HttpPost("add-city")]
-    public async Task<ActionResult<City>> Create(City userInput,CancellationToken cancellationToken)
+    public async Task<ActionResult<City?>> Create(City userInput,CancellationToken cancellationToken)
     {
-     
+       City city = await _cityRepository.CreateAsync(userInput, cancellationToken)
     }
 
     [HttpGet("get-all-cities")]
