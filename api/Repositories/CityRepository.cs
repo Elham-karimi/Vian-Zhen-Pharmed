@@ -30,4 +30,24 @@ public class CityRepository : ICityRepository
 
         return city;
     }
+
+    public async Task<City?> GetByNameAsync(string cityName, CancellationToken cancellationToken)
+    {
+        City city = await _collection.Find<City>(city => city.StateName == cityName).FirstOrDefaultAsync(cancellationToken);
+
+        if (city is null)
+            return null;
+
+        return city;
+    }
+
+     public async Task<List<City>> GetAllAsync (CancellationToken cancellationToken)
+    {
+        List<City> cities = await _collection.Find(new BsonDocument()).ToListAsync(cancellationToken);
+
+        if(cities.Any())
+            return cities;
+        
+        return cities;
+    }
 }
