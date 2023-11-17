@@ -16,9 +16,9 @@ public class AdminController : BaseApiController
     /// <param name="cancellationToken"></param>
     /// <returns>IEnumerable<AppUser></returns>
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<AdminDto?>>> GetAll(CancellationToken cancellationToken)
+    public async Task<ActionResult<IEnumerable<UserDto?>>> GetAll(CancellationToken cancellationToken)
     {
-        List<AdminDto>? appUsers = await _adminRepository.GetAllAsync(cancellationToken);
+        List<UserDto>? appUsers = await _adminRepository.GetAllAsync(cancellationToken);
 
         if (!appUsers.Any())
             return NoContent();
@@ -34,14 +34,14 @@ public class AdminController : BaseApiController
     /// <param name="cancellationToken"></param>
     /// <returns>AppUser</returns>
     [HttpGet("get-by-id/{userId}")]
-    public async Task<ActionResult<AdminDto>> GetUserById(string userId, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserDto>> GetUserById(string userId, CancellationToken cancellationToken)
     {
 
-        AdminDto? adminDto = await _adminRepository.GetَUserbyIdAsync(userId, cancellationToken);
+        UserDto? userDto = await _adminRepository.GetَUserbyIdAsync(userId, cancellationToken);
 
-        if (adminDto is null)
+        if (userDto is null)
             return NotFound("No user with This Id found");
 
-        return adminDto;
+        return userDto;
     }
 }

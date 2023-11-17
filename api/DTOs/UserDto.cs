@@ -1,6 +1,6 @@
 namespace api.DTOs;
 
-public record AdminDto(
+public record UserDto(
     string Id,
     string Email
 );
