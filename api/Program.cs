@@ -40,6 +40,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<IAccountRepository , AccountRepository>();
 builder.Services.AddScoped<IAdminRepository , AdminRepository>();
 builder.Services.AddScoped<IProductRepository , ProductRepository>();
+builder.Services.AddScoped<ICityRepository , CityRepository>();
 
 #endregion Dependency Injection
 
