@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { AddUserComponent } from './components/add-user/add-user.component';
+// import { AddUserComponent } from './components/add-user/add-user.component';
 import { AboutusComponent } from './components/aboutus/aboutus.component';
-import { UserLoginComponent } from './components/user-login/user-login.component';
+// import { UserLoginComponent } from './components/user-login/user-login.component';
 import { ColtVitaminSupplementComponent } from './components/colt-vitamin-supplement/colt-vitamin-supplement.component';
 import { MareVitaminSupplementComponent } from './components/mare-vitamin-supplement/mare-vitamin-supplement.component';
 import { SportHorsesVitaminSupplementComponent } from './components/sport-horses-vitamin-supplement/sport-horses-vitamin-supplement.component';
@@ -19,8 +19,8 @@ import { ListProductsComponent } from './components/list-products/list-products.
 const routes: Routes = [
   {path: '', component: HomeComponent}, 
   {path: 'home', component: HomeComponent},
-  {path: 'add-user', component: AddUserComponent},
-  {path: 'user-login', component: UserLoginComponent},
+  // {path: 'add-user', component: AddUserComponent},
+  // {path: 'user-login', component: UserLoginComponent},
   {path: 'list-products' , component: ListProductsComponent},
   {path: 'colt-vitamin-supplement', component: ColtVitaminSupplementComponent},
   {path: 'mare-vitamin-supplement', component: MareVitaminSupplementComponent},

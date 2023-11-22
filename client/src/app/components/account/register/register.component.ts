@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { City } from 'src/app/models/city.model';
-import { SignUp } from 'src/app/models/signup.model';
+// import { SignUp } from 'src/app/models/signup.model';
 import {MatInputModule} from '@angular/material/input';
 import {NgFor, NgIf} from '@angular/common';
 import {MatSelectModule} from '@angular/material/select';
