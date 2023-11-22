@@ -19,7 +19,7 @@ public class UserController : BaseApiController
     {
         List<UserDto> userDtos = await _userRepository.GetAllAsync(cancellationToken);
 
-        if (!userDtos.Any()) // []
+        if (!userDtos.Any()) 
             return NoContent();
 
         return userDtos;
