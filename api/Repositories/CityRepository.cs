@@ -12,7 +12,7 @@ public class CityRepository : ICityRepository
         _collection = dbName.GetCollection<City>(_collectionName);
     }
 
-    public async Task<City?> CreateAsync(City userInput, CancellationToken cancellationToken)
+    public async Task<City?> CreateAsync(CityDto userInput, CancellationToken cancellationToken)
     {
         bool doseCityExist = await _collection.Find<City>(city =>
         city.StateName == userInput.StateName.ToLower().Trim()).AnyAsync(cancellationToken);
@@ -31,9 +31,9 @@ public class CityRepository : ICityRepository
         return city;
     }
 
-    public async Task<City?> GetByNameAsync(string cityName, CancellationToken cancellationToken)
+    public async Task<City?> GetByNameAsync(string stateName, CancellationToken cancellationToken)
     {
-        City city = await _collection.Find<City>(city => city.StateName == cityName).FirstOrDefaultAsync(cancellationToken);
+        City city = await _collection.Find<City>(city => city.StateName == stateName).FirstOrDefaultAsync(cancellationToken);
 
         if (city is null)
             return null;
