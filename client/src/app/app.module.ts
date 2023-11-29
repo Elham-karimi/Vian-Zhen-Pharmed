@@ -46,6 +46,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ListCitiesComponent } from './components/list-cities/list-cities.component';
+import { NoAccessComponent } from './components/no-access/no-access.component';
 
 // import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 // import { library as legacyLibrary } from '@fortawesome/fontawesome-svg-core';
@@ -75,6 +76,7 @@ import { ListCitiesComponent } from './components/list-cities/list-cities.compon
     ImageSliderComponent,
     RegisterComponent,
     LoginComponent,
+    NoAccessComponent,
   ],
   imports: [
     BrowserModule,
