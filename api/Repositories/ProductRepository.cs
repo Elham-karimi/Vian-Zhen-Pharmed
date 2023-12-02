@@ -12,25 +12,28 @@ public class ProductRepository : IProductRepository
         _collection = dbName.GetCollection<Product>(_collectionName);
     }
 
-    public async Task<Product?> CreateAsync(Product adminInput, CancellationToken cancellationToken)
+    public async Task<Product?> CreateAsync(ProductDto adminInput, CancellationToken cancellationToken)
     {
         bool doseProductExist = await _collection.Find<Product>(product =>
-            product.Name == adminInput.Name.ToLower().Trim()).AnyAsync(cancellationToken);
+            product.PersianName == adminInput.PersianName.ToLower().Trim()).AnyAsync(cancellationToken);
 
         if (doseProductExist)
             return null;
 
         Product product = new Product(
-          Id: null,
-          Name: adminInput.Name,
-          ShortDescription: adminInput.ShortDescription,
-          SpecificSpecification: new SpecificSpecification(
-              ProductType: adminInput.SpecificSpecification.ProductType,
-              ConsumerGroup: adminInput.SpecificSpecification.ConsumerGroup,
-              UsageCases: adminInput.SpecificSpecification.UsageCases,
-              Dosage: adminInput.SpecificSpecification.Dosage,
-              Combination: adminInput.SpecificSpecification.Combination
-          )
+         Id: null,
+         PersianName: adminInput.PersianName,
+         EnglishName: adminInput.EnglishName,
+         ShortDescription: adminInput.ShortDescription,
+         UsageCases: adminInput.UsageCases,
+         ProductType: adminInput.ProductType,
+         ConsumerGroup: adminInput.ConsumerGroup,
+         Dosage: adminInput.Dosage,
+         Combination : new Combination(
+           TypeOfCombination : adminInput.Combination.TypeOfCombination,
+           Title : adminInput.Combination.Title
+        //    Amount : adminInput.Combination.Amount
+         )
       );
 
         if (_collection is not null)
@@ -41,7 +44,7 @@ public class ProductRepository : IProductRepository
 
     public async Task<Product?> GetByNameAsync(string productName, CancellationToken cancellationToken)
     {
-        Product product = await _collection.Find<Product>(pro => pro.Name == productName).FirstOrDefaultAsync(cancellationToken);
+        Product product = await _collection.Find<Product>(pro => pro.PersianName == productName).FirstOrDefaultAsync(cancellationToken);
 
         if (product is null)
             return null;
@@ -62,13 +65,15 @@ public class ProductRepository : IProductRepository
     public async Task<UpdateResult?> UpdateByIdAsync(string productId, Product productIn, CancellationToken cancellationToken)
     {
         var updatedProduct = Builders<Product>.Update
-       .Set((Product doc) => doc.Name, productIn.Name)
+       .Set((Product doc) => doc.PersianName, productIn.PersianName)
+       .Set(doc => doc.EnglishName, productIn.EnglishName)
        .Set(doc => doc.ShortDescription, productIn.ShortDescription)
-       .Set(doc => doc.SpecificSpecification.ProductType, productIn.SpecificSpecification.ProductType)
-       .Set(doc => doc.SpecificSpecification.ConsumerGroup, productIn.SpecificSpecification.ConsumerGroup)
-       .Set(doc => doc.SpecificSpecification.UsageCases, productIn.SpecificSpecification.UsageCases)
-       .Set(doc => doc.SpecificSpecification.Dosage, productIn.SpecificSpecification.Dosage)
-       .Set(doc => doc.SpecificSpecification.Combination, productIn.SpecificSpecification.Combination);
+       .Set(doc => doc.UsageCases, productIn.UsageCases)
+       .Set(doc => doc.ProductType, productIn.ProductType)
+       .Set(doc => doc.ConsumerGroup, productIn.ConsumerGroup)
+       .Set(doc => doc.Combination.TypeOfCombination , productIn.Combination.TypeOfCombination)
+       .Set(doc => doc.Combination.Title , productIn.Combination.Title);
+    //    .Set(doc => doc.Combination.Amount , productIn.Combination.Amount);
 
         if (_collection is not null)
             return await _collection.UpdateOneAsync<Product>((doc => doc.Id == productIn.Id), updatedProduct, null, cancellationToken);
