@@ -12,3 +12,4 @@ global using api.Repositories;
 global using Microsoft.Extensions.Options;
 global using api.Controllers.Helpers;
 global using MongoDB.Driver.Core.Operations;
+global using System.Collections.Generic;
