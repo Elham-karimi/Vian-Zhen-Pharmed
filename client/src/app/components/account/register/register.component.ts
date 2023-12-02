@@ -2,10 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { City } from 'src/app/models/city.model';
-// import { SignUp } from 'src/app/models/signup.model';
 import {MatInputModule} from '@angular/material/input';
 import {NgFor, NgIf} from '@angular/common';
 import {MatSelectModule} from '@angular/material/select';
+import { AccountService } from 'src/app/services/account.service';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +16,7 @@ export class RegisterComponent {
   signupRes: SignUp | undefined;
   cities: City[] | undefined;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) { }
+  constructor(private fb: FormBuilder, private accountService : AccountService) { }
 
   //#region Create Form Group/controler (AbstractControl)
   signupFg = this.fb.group({
@@ -45,7 +45,11 @@ export class RegisterComponent {
   //#endregion
 
   // #region Methods
-  registerUser(): void {
+  register(): void {
+
+    this.accountService.registerUser().subscribe({
+        next : user => user
+    })
     let signUp: SignUp = {
       name: this.NameCtrl.value,
       email: this.EmailCtrl.value,
