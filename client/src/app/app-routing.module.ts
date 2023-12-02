@@ -2,9 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-// import { AddUserComponent } from './components/add-user/add-user.component';
 import { AboutusComponent } from './components/aboutus/aboutus.component';
-// import { UserLoginComponent } from './components/user-login/user-login.component';
 import { ColtVitaminSupplementComponent } from './components/colt-vitamin-supplement/colt-vitamin-supplement.component';
 import { MareVitaminSupplementComponent } from './components/mare-vitamin-supplement/mare-vitamin-supplement.component';
 import { SportHorsesVitaminSupplementComponent } from './components/sport-horses-vitamin-supplement/sport-horses-vitamin-supplement.component';
@@ -15,12 +13,15 @@ import { MultiEnzymeSupplementComponent } from './components/multi-enzyme-supple
 import { VianAmbassadorsComponent } from './components/vian-ambassadors/vian-ambassadors.component';
 import { ContactusComponent } from './components/contactus/contactus.component';
 import { ListProductsComponent } from './components/list-products/list-products.component';
+import { RegisterComponent } from './components/account/register/register.component';
+import { LoginComponent } from './components/account/login/login.component';
+import { NoAccessComponent } from './components/no-access/no-access.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent}, 
   {path: 'home', component: HomeComponent},
-  // {path: 'add-user', component: AddUserComponent},
-  // {path: 'user-login', component: UserLoginComponent},
+  {path: 'register', component: RegisterComponent},
+  {path: 'login' , component : LoginComponent},
   {path: 'list-products' , component: ListProductsComponent},
   {path: 'colt-vitamin-supplement', component: ColtVitaminSupplementComponent},
   {path: 'mare-vitamin-supplement', component: MareVitaminSupplementComponent},
@@ -32,6 +33,7 @@ const routes: Routes = [
   {path: 'vian-ambassadors', component : VianAmbassadorsComponent},
   {path: 'contactus' , component : ContactusComponent},
   {path: 'aboutus',component: AboutusComponent},
+  {path: 'no-access', component: NoAccessComponent},//gaurd
   {path: '**', component: NotFoundComponent}
 ];
 
