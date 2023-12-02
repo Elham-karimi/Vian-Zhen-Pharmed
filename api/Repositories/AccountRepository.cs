@@ -1,3 +1,6 @@
+using System.Security.Cryptography;
+using System.Text;
+
 namespace api.Repositories;
 
 public class AccountRepository : IAccountRepository
@@ -19,14 +22,16 @@ public class AccountRepository : IAccountRepository
         if (doesAccountExist)
             return null;
 
+        using var hmac = new HMACSHA512();
+
         AppUser appUser = new AppUser(
             Id: null,
             Email: userInput.Email.ToLower().Trim(),
-            Password: userInput.Password.Trim(),
-            ConfirmPassword: userInput.ConfirmPassword.Trim(),
+            PasswordHash: hmac.ComputeHash(Encoding.UTF8.GetBytes(userInput.Password)),
+            PasswordSalt: hmac.Key,
             City: new City(
                 Id: null,
-                StateName : userInput.City.StateName
+                StateName: userInput.City.StateName
             )
         );
 
@@ -49,20 +54,21 @@ public class AccountRepository : IAccountRepository
     public async Task<UserDto?> LoginAsync(LoginDto userInput, CancellationToken cancellationToken)
     {
         AppUser appUser = await _collection.Find<AppUser>(user =>
-        user.Email == userInput.Email.ToLower().Trim()
-        && user.Password == userInput.Password).FirstOrDefaultAsync(cancellationToken);
+        user.Email == userInput.Email.ToLower().Trim()).FirstOrDefaultAsync(cancellationToken);
 
-        if (appUser is null)
-            return null;
+        using var hmac = new HMACSHA512(appUser.PasswordSalt);
 
-        if (appUser.Id is not null)
+        var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userInput.Password));
+
+        if (appUser.PasswordHash is not null && appUser.PasswordHash.SequenceEqual(computedHash))
         {
-            UserDto userDto = new UserDto(
-                Id: appUser.Id,
-                Email: appUser.Email
-            );
-
-            return userDto;
+            if (appUser.Id is not null)
+            {
+                return new UserDto(
+                    Id: appUser.Id,
+                    Email: appUser.Email
+                );
+            }
         }
 
         return null;
@@ -72,8 +78,8 @@ public class AccountRepository : IAccountRepository
     {
         var updatedUser = Builders<AppUser>.Update
         .Set((AppUser user) => user.Email, appUser.Email.ToLower().Trim())
-        .Set(user => user.Password, appUser.Password.Trim())
-        .Set(user => user.ConfirmPassword, appUser.ConfirmPassword.Trim())
+        .Set(user => user.PasswordHash, appUser.PasswordHash)
+        .Set(user => user.PasswordSalt, appUser.PasswordSalt)
         .Set(user => user.City, appUser.City);
 
         if (_collection is not null)
