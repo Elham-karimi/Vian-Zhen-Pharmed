@@ -10,14 +10,14 @@ public class ProductController : BaseApiController
     }
 
     [HttpPost("add-product")]
-    public async Task<ActionResult<Product>> Register(Product product, CancellationToken cancellationToken)
+    public async Task<ActionResult<Product>> Register(ProductDto adminInput, CancellationToken cancellationToken)
     {
-       Product? product1 = await _productRepository.CreateAsync(product,cancellationToken);
+       Product? product = await _productRepository.CreateAsync(adminInput,cancellationToken);
 
-       if(product1 is null)
+       if(product is null)
         return BadRequest("This product has already been Registered");
 
-        return product1;
+        return product;
     }
 
     [HttpGet("get-by-name/{productName}")]
