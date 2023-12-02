@@ -2,7 +2,7 @@ namespace api.Interfaces;
 
 public interface IProductRepository
 {
-    public Task<Product?> CreateAsync(Product adminInput, CancellationToken cancellationToken);
+    public Task<Product?> CreateAsync(ProductDto adminInput, CancellationToken cancellationToken);
 
     public Task<Product?> GetByNameAsync(string productName, CancellationToken cancellationToken);
 
