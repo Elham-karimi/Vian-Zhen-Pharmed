@@ -17,4 +17,8 @@ export class UserService {
       })
     );
   }
+
+  getUserById(): {
+    return this.http.get<User>()
+  }
 }
