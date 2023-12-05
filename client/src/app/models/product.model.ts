@@ -1,11 +1,9 @@
 export interface Product{
-    name : string,
+    persianName : string,
+    englishName : string,
     shortDescription : string,
-    SpecificSpecification :{
-        productType : string,
-        consumerGroup : string,
-        usageCases : string,
-        dosage : string,
-        combination : string
-    }
+    usageCases : string,
+    productType : string,
+    consumerGroup : string, 
+    dosage : string
 }
