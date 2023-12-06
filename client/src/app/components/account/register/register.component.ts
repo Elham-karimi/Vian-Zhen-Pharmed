@@ -47,7 +47,7 @@ export class RegisterComponent {
   // #region Methods
   register(): void {
 
-    this.accountService.registerUser().subscribe({
+    this.accountService.registerUser(user).subscribe({
         next : user => user
     })
     let signUp: SignUp = {
