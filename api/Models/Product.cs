@@ -9,5 +9,12 @@ public record Product(
     string ProductType,
     string ConsumerGroup,
     string Dosage,
+    string TypeOfCombination,
     Combination Combination
     );
+
+public record Combination(
+    string Title,
+    int Amount
+    );
+
