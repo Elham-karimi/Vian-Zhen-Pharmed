@@ -56,6 +56,9 @@ public class AccountRepository : IAccountRepository
         AppUser appUser = await _collection.Find<AppUser>(user =>
         user.Email == userInput.Email.ToLower().Trim()).FirstOrDefaultAsync(cancellationToken);
 
+        if(appUser is null)
+           return null;
+
         using var hmac = new HMACSHA512(appUser.PasswordSalt);
 
         var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userInput.Password));
