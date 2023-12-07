@@ -1,3 +1,6 @@
+using System.Collections;
+using Microsoft.AspNetCore.Components.Web;
+
 namespace api.Repositories;
 
 public class ProductRepository : IProductRepository
@@ -29,10 +32,10 @@ public class ProductRepository : IProductRepository
          ProductType: adminInput.ProductType,
          ConsumerGroup: adminInput.ConsumerGroup,
          Dosage: adminInput.Dosage,
-         Combination : new Combination(
-           TypeOfCombination : adminInput.Combination.TypeOfCombination,
-           Title : adminInput.Combination.Title
-        //    Amount : adminInput.Combination.Amount
+         TypeOfCombination: adminInput.TypeOfCombination,
+         Combination: new Combination(
+            Title: adminInput.Combination.Title,
+            Amount : adminInput.Combination.Amount   
          )
       );
 
@@ -71,20 +74,21 @@ public class ProductRepository : IProductRepository
        .Set(doc => doc.UsageCases, productIn.UsageCases)
        .Set(doc => doc.ProductType, productIn.ProductType)
        .Set(doc => doc.ConsumerGroup, productIn.ConsumerGroup)
-       .Set(doc => doc.Combination.TypeOfCombination , productIn.Combination.TypeOfCombination)
-       .Set(doc => doc.Combination.Title , productIn.Combination.Title);
-    //    .Set(doc => doc.Combination.Amount , productIn.Combination.Amount);
-
-        if (_collection is not null)
+       .Set(doc => doc.TypeOfCombination,productIn.TypeOfCombination)
+       .Set(doc => 
+            .Set(doc.Combination, productIn.Combination.Title) 
+            .Set(doc.Combination, productIn.Combination.Amount)
+       );
+            if (_collection is not null)
             return await _collection.UpdateOneAsync<Product>((doc => doc.Id == productIn.Id), updatedProduct, null, cancellationToken);
 
         return null;
+       }    
     }
 
-    public async Task<DeleteResult> DeleteByIdAsync(string productId, CancellationToken cancellationToken)
-    {
-        return await _collection.DeleteOneAsync<Product>(doc => doc.Id == productId);
-    }
+public async Task<DeleteResult> DeleteByIdAsync(string productId, CancellationToken cancellationToken)
+
+ => await ICollection.DeleteOneAsync<Product>(doc => doc.Id == productId);
 
 
 }
