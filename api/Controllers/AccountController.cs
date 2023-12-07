@@ -56,8 +56,8 @@ public class AccountController : BaseApiController
     [HttpPut("update/{userId}")]
     public async Task<ActionResult<UpdateResult?>> UpdateUserById(string userId, AppUser userInput, CancellationToken cancellationToken)
     {
-        if (userInput.Password != userInput.ConfirmPassword)
-            return BadRequest("Password don't match!");
+        // if (userInput.Password != userInput.ConfirmPassword)
+        //     return BadRequest("Password don't match!");
 
         UpdateResult? updateResult = await _accountRepository.UpdateAsync(userId, userInput, cancellationToken);
 
