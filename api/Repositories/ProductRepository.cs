@@ -75,9 +75,8 @@ public class ProductRepository : IProductRepository
        .Set(doc => doc.ProductType, productIn.ProductType)
        .Set(doc => doc.ConsumerGroup, productIn.ConsumerGroup)
        .Set(doc => doc.TypeOfCombination,productIn.TypeOfCombination)
-       .Set(doc => 
-            .Set(doc.Combination, productIn.Combination.Title) 
-            .Set(doc.Combination, productIn.Combination.Amount)
+       .Set(doc => (doc.Combination, productIn.Combination.Title,
+            doc=> doc.Combination, productIn.Combination.Amount )
        );
             if (_collection is not null)
             return await _collection.UpdateOneAsync<Product>((doc => doc.Id == productIn.Id), updatedProduct, null, cancellationToken);
