@@ -13,16 +13,16 @@ import { AccountService } from 'src/app/services/account.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
-  signupRes: SignUp | undefined;
+  // signupRes: SignUp | undefined;
   cities: City[] | undefined;
 
   constructor(private fb: FormBuilder, private accountService : AccountService) { }
 
   //#region Create Form Group/controler (AbstractControl)
-  signupFg = this.fb.group({
-    nameCtrl: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
+  registerFg = this.fb.group({
     emailCtrl: ['', [Validators.required, Validators.pattern(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,5})+)$/)]],
-    passwordCtrl: ['', [Validators.required, Validators.minLength(8)]],
+    passwordCtrl: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
+    confirmPasswordCtrl: ['',[Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
     cityCtrl: this.fb.group({
       stateNameCtrl: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]]
     })
@@ -30,17 +30,17 @@ export class RegisterComponent {
   //#endregion
 
   //#region Forms Properties
-  get NameCtrl(): FormControl {
-    return this.signupFg.get('nameCtrl') as FormControl;
-  }
   get EmailCtrl(): FormControl {
-    return this.signupFg.get('emailCtrl') as FormControl;
+    return this.registerFg.get('emailCtrl') as FormControl;
   }
   get PasswordCtrl(): FormControl {
-    return this.signupFg.get('passwordCtrl') as FormControl;
+    return this.registerFg.get('passwordCtrl') as FormControl;
+  }
+  get ConfirmPasswordCtrl() : FormControl {
+    return this.registerFg.get('confirmPasswordCtrl') as FormControl;
   }
   get CityCrl(): FormControl {
-    return this.signupFg.get('cityCtrl')?.get('stateNameCtrl') as FormControl;
+    return this.registerFg.get('cityCtrl')?.get('stateNameCtrl') as FormControl;
   }
   //#endregion
 
@@ -51,7 +51,6 @@ export class RegisterComponent {
         next : user => user
     })
     let signUp: SignUp = {
-      name: this.NameCtrl.value,
       email: this.EmailCtrl.value,
       password: this.PasswordCtrl.value,
       city: {
