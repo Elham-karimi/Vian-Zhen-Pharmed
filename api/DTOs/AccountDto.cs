@@ -14,3 +14,8 @@ public record LoginDto(
     [DataType(DataType.Password), MinLength(7), MaxLength(20)] string Password
 );
 
+public record LoggedInDto(
+  string Id,
+  string Email,
+  string Token
+);
