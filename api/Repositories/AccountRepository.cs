@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using System.Text;
+using api.Services;
 
 namespace api.Repositories;
 
@@ -8,13 +9,16 @@ public class AccountRepository : IAccountRepository
     private const string _collectionName = "users";
     private readonly IMongoCollection<AppUser>? _collection;
 
-    public AccountRepository(IMongoClient client, IMongoDbSettings dbSettings)
+    private readonly ITokenService _tokenServise;
+
+    public AccountRepository(IMongoClient client, IMongoDbSettings dbSettings, ITokenService tokenService)
     {
         var dbName = client.GetDatabase(dbSettings.DatabaseName);
         _collection = dbName.GetCollection<AppUser>(_collectionName);
+        _tokenServise = tokenService;
     }
 
-    public async Task<UserDto?> CreateAsync(RegisterDto userInput, CancellationToken cancellationToken)
+    public async Task<LoggedInDto?> CreateAsync(RegisterDto userInput, CancellationToken cancellationToken)
     {
         bool doesAccountExist = await _collection.Find<AppUser>(user =>
              user.Email == userInput.Email.ToLower().Trim()).AnyAsync(cancellationToken);
@@ -31,7 +35,7 @@ public class AccountRepository : IAccountRepository
             PasswordSalt: hmac.Key,
             City: new City(
                 Id: null,
-                StateName: userInput.City.StateName
+                StateName: userInput.CityDto.StateName
             )
         );
 
@@ -40,21 +44,22 @@ public class AccountRepository : IAccountRepository
 
         if (appUser.Id is not null)
         {
-            UserDto userDto = new UserDto(
+            LoggedInDto loggedInDto = new LoggedInDto(
                 Id: appUser.Id,
-                Email: appUser.Email
+                Email: appUser.Email,
+                Token : _tokenServise.CreateToken(appUser)
             );
 
-            return userDto;
+            return loggedInDto;
         }
 
         return null;
     }
 
-    public async Task<UserDto?> LoginAsync(LoginDto userInput, CancellationToken cancellationToken)
+    public async Task<LoggedInDto?> LoginAsync(LoginDto userInput, CancellationToken cancellationToken)
     {
         AppUser appUser = await _collection.Find<AppUser>(user =>
-        user.Email == userInput.Email.ToLower().Trim()).FirstOrDefaultAsync(cancellationToken);
+           user.Email == userInput.Email.ToLower().Trim()).FirstOrDefaultAsync(cancellationToken);
 
         if(appUser is null)
            return null;
@@ -67,9 +72,10 @@ public class AccountRepository : IAccountRepository
         {
             if (appUser.Id is not null)
             {
-                return new UserDto(
+                return new LoggedInDto(
                     Id: appUser.Id,
-                    Email: appUser.Email
+                    Email: appUser.Email,
+                    Token :_tokenServise.CreateToken(appUser)
                 );
             }
         }
