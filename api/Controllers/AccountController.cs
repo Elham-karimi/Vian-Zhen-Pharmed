@@ -14,17 +14,17 @@ public class AccountController : BaseApiController
     /// <param name="cancellationToken"></param>
     /// <returns>UserDto</returns>
     [HttpPost("register")]
-    public async Task<ActionResult<UserDto>> Register(RegisterDto userInput, CancellationToken cancellationToken)
+    public async Task<ActionResult<LoggedInDto>> Register(RegisterDto userInput, CancellationToken cancellationToken)
     {
         if (userInput.Password != userInput.ConfirmPassword)
             return BadRequest("Passwords don't match!");
 
-        UserDto? userDto = await _accountRepository.CreateAsync(userInput, cancellationToken);
+        LoggedInDto? loggedInDto = await _accountRepository.CreateAsync(userInput, cancellationToken);
 
-        if (userDto is null)
+        if (loggedInDto is null)
             return BadRequest("Email/Username is taken.");
 
-        return userDto;
+        return loggedInDto;
     }
 
     /// <summary>
@@ -35,14 +35,14 @@ public class AccountController : BaseApiController
     /// <param name="cancellationToken"></param>
     /// <returns>UserDto</returns>
     [HttpPost("login")]
-    public async Task<ActionResult<UserDto>> Login(LoginDto userInput, CancellationToken cancellationToken)
+    public async Task<ActionResult<LoggedInDto>> Login(LoginDto userInput, CancellationToken cancellationToken)
     {
-        UserDto? userDto = await _accountRepository.LoginAsync(userInput, cancellationToken);
+        LoggedInDto? loggedInDto = await _accountRepository.LoginAsync(userInput, cancellationToken);
 
-        if (userDto is null)
+        if (loggedInDto is null)
             return Unauthorized("Wrong username or password");
 
-        return userDto;
+        return loggedInDto;
     }
 
     /// <summary>
