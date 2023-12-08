@@ -1,5 +1,6 @@
 
 using System.Text;
+using api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -63,6 +64,7 @@ builder.Services.AddScoped<IAccountRepository , AccountRepository>();
 builder.Services.AddScoped<IProductRepository , ProductRepository>();
 builder.Services.AddScoped<ICityRepository , CityRepository>();
 builder.Services.AddScoped<IUserRepository , UserRepository>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 #endregion Dependency Injection
 
@@ -73,6 +75,8 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 
 app.UseCors();
+
+app.UseAuthentication(); // this line has to be between Cors and Authorization!
 
 app.UseAuthorization();
 
