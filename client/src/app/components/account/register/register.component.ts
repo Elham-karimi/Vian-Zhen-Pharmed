@@ -1,11 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { City } from 'src/app/models/city.model';
-import {MatInputModule} from '@angular/material/input';
-import {NgFor, NgIf} from '@angular/common';
-import {MatSelectModule} from '@angular/material/select';
 import { AccountService } from 'src/app/services/account.service';
+import { RegisterUser } from 'src/app/models/register-user.model';
 
 @Component({
   selector: 'app-register',
@@ -13,16 +10,18 @@ import { AccountService } from 'src/app/services/account.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
-  // signupRes: SignUp | undefined;
+
+  passowrdsNotMatch: boolean | undefined;
+  apiErrorMessage: string | undefined;
   cities: City[] | undefined;
 
-  constructor(private fb: FormBuilder, private accountService : AccountService) { }
+  constructor(private fb: FormBuilder, private accountService: AccountService) { }
 
   //#region Create Form Group/controler (AbstractControl)
   registerFg = this.fb.group({
     emailCtrl: ['', [Validators.required, Validators.pattern(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,5})+)$/)]],
-    passwordCtrl: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
-    confirmPasswordCtrl: ['',[Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
+    passwordCtrl: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(20)]],
+    confirmPasswordCtrl: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(20)]],
     cityCtrl: this.fb.group({
       stateNameCtrl: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]]
     })
@@ -36,43 +35,43 @@ export class RegisterComponent {
   get PasswordCtrl(): FormControl {
     return this.registerFg.get('passwordCtrl') as FormControl;
   }
-  get ConfirmPasswordCtrl() : FormControl {
+  get ConfirmPasswordCtrl(): FormControl {
     return this.registerFg.get('confirmPasswordCtrl') as FormControl;
   }
-  get CityCrl(): FormControl {
+  get CityCtrl(): FormControl {
     return this.registerFg.get('cityCtrl')?.get('stateNameCtrl') as FormControl;
   }
   //#endregion
 
   // #region Methods
   register(): void {
+    this.apiErrorMessage = undefined;
 
-    this.accountService.registerUser(user).subscribe({
-        next : user => user
-    })
-    let signUp: SignUp = {
-      email: this.EmailCtrl.value,
-      password: this.PasswordCtrl.value,
-      city: {
-        stateName : this.CityCrl.value
+    if (this.PasswordCtrl.value === this.ConfirmPasswordCtrl.value) {
+      this.passowrdsNotMatch = false;
+
+      let user: RegisterUser = {
+        email: this.EmailCtrl.value,
+        password: this.PasswordCtrl.value,
+        confirmpassword: this.ConfirmPasswordCtrl.value,
+        city: this.CityCtrl.value
       }
+
+      this.accountService.registerUser(user).subscribe({
+        next: user => console.log(user),
+        error: err => this.apiErrorMessage = err.error
+      })
     }
-
-    this.http.post<SignUp>('http://localhost5000/api/signup/register', signUp).subscribe(
-      {
-        next: response => {
-          this.signupRes = response;
-          console.log(this.signupRes);
-        }
-      }
-    );
+    else {
+      this.passowrdsNotMatch = true;
+    }
   }
 
-  showCities(): void {
-    this.http.get<City[]>('http://localhost:5000/api/city/get-all-cities').subscribe(
-      { next: response => this.cities = response }
-    );
-  }
+  // showCities(): void {
+  //   this.http.get<City[]>('http://localhost:5000/api/city/get-all-cities').subscribe(
+  //     { next: response => this.cities = response }
+  //   );
+  // }
 }
 
 
