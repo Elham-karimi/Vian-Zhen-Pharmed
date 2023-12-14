@@ -51,9 +51,9 @@ public class ProductController : BaseApiController
     }
 
     [HttpDelete("delete/{productId}")]
-    public async Task<ActionResult<DeleteResult>> DeleteProductById(string productId, CancellationToken cancellationToken)
+    public async Task<ActionResult<DeleteResult?>> DeleteProductById(string productId, CancellationToken cancellationToken)
     {
-        DeleteResult deleteResult = await _productRepository.DeleteByIdAsync(productId,cancellationToken);
+        DeleteResult? deleteResult = await _productRepository.DeleteByIdAsync(productId,cancellationToken);
 
         return deleteResult;
     }
