@@ -35,7 +35,7 @@ public class ProductRepository : IProductRepository
          TypeOfCombination: adminInput.TypeOfCombination,
          Combination: new Combination(
             Title: adminInput.Combination.Title,
-            Amount : adminInput.Combination.Amount   
+            Amount: adminInput.Combination.Amount
          )
       );
 
@@ -54,7 +54,6 @@ public class ProductRepository : IProductRepository
 
         return product;
     }
-
     public async Task<List<Product>> GetAllAsync(CancellationToken cancellationToken)
     {
         List<Product> products = await _collection.Find<Product>(new BsonDocument()).ToListAsync(cancellationToken);
@@ -74,20 +73,24 @@ public class ProductRepository : IProductRepository
        .Set(doc => doc.UsageCases, productIn.UsageCases)
        .Set(doc => doc.ProductType, productIn.ProductType)
        .Set(doc => doc.ConsumerGroup, productIn.ConsumerGroup)
-       .Set(doc => doc.TypeOfCombination,productIn.TypeOfCombination)
-       .Set(doc => (doc.Combination, productIn.Combination.Title,
-            doc=> doc.Combination, productIn.Combination.Amount )
+       .Set(doc => doc.TypeOfCombination, productIn.TypeOfCombination)
+       .Set(doc => doc.Combination.Title, productIn.Combination.Title)
+       .Set(doc => doc.Combination.Amount, productIn.Combination.Amount
        );
-            if (_collection is not null)
+        if (_collection is not null)
             return await _collection.UpdateOneAsync<Product>((doc => doc.Id == productIn.Id), updatedProduct, null, cancellationToken);
 
         return null;
-       }    
     }
 
-public async Task<DeleteResult> DeleteByIdAsync(string productId, CancellationToken cancellationToken)
+    public async Task<DeleteResult?> DeleteByIdAsync(string productId, CancellationToken cancellationToken)
+    {
+        if (_collection is not null)
+            return await _collection.DeleteOneAsync<Product>(doc => doc.Id == productId);
 
- => await ICollection.DeleteOneAsync<Product>(doc => doc.Id == productId);
+        return null;
 
+    }
 
 }
+
