@@ -100,7 +100,7 @@ public class AccountRepository : IAccountRepository
     public async Task<DeleteResult?> DeleteAsync(string userId, CancellationToken cancellationToken)
     {
         if (_collection is not null)
-            return await _collection.DeleteOneAsync(userId, null, cancellationToken);
+            return await _collection.DeleteOneAsync<AppUser>(user => user.Id == userId);
 
         return null;
     }
