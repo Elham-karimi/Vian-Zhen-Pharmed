@@ -38,5 +38,10 @@
         </mat-form-field>
 
         <button type="submit" [disabled]="registerFg.invalid" mat-raised-button color="primary"> ثبت نام </button>
+
+        <!-- Other Errors -->
+    <p *ngIf="passowrdsNotMatch">Passwords don't match!</p>
+    <p *ngIf="apiErrorMessage">{{apiErrorMessage}}</p>
     </div>
+    
 </form>
