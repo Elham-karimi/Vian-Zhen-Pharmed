@@ -9,7 +9,7 @@ public record ProductDto(
     [MinLength(1), MaxLength(300)] string ConsumerGroup,
     [MinLength(1), MaxLength(300)] string Dosage,
     [MinLength(1), MaxLength(1000)] string TypeOfCombination,
-    Combination Combination
+    CombinationDto CombinationsDto
     );
 
 public record CombinationDto(

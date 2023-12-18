@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace api.Models;
 
 public record Product(
@@ -10,7 +12,7 @@ public record Product(
     string ConsumerGroup,
     string Dosage,
     string TypeOfCombination,
-    Combination Combination
+    Combination Combinations
     );
 
 public record Combination(

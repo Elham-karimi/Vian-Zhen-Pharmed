@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using Microsoft.AspNetCore.Components.Web;
 
 namespace api.Repositories;
@@ -33,9 +34,9 @@ public class ProductRepository : IProductRepository
          ConsumerGroup: adminInput.ConsumerGroup,
          Dosage: adminInput.Dosage,
          TypeOfCombination: adminInput.TypeOfCombination,
-         Combination: new Combination(
-            Title: adminInput.Combination.Title,
-            Amount: adminInput.Combination.Amount
+         Combinations: new Combination(
+            Title: adminInput.CombinationsDto.Title,
+            Amount: adminInput.CombinationsDto.Amount
          )
       );
 
@@ -74,8 +75,8 @@ public class ProductRepository : IProductRepository
        .Set(doc => doc.ProductType, productIn.ProductType)
        .Set(doc => doc.ConsumerGroup, productIn.ConsumerGroup)
        .Set(doc => doc.TypeOfCombination, productIn.TypeOfCombination)
-       .Set(doc => doc.Combination.Title, productIn.Combination.Title)
-       .Set(doc => doc.Combination.Amount, productIn.Combination.Amount
+       .Set(doc => doc.Combinations.Title, productIn.Combinations.Title)
+       .Set(doc => doc.Combinations.Amount, productIn.Combinations.Amount
        );
         if (_collection is not null)
             return await _collection.UpdateOneAsync<Product>((doc => doc.Id == productIn.Id), updatedProduct, null, cancellationToken);
