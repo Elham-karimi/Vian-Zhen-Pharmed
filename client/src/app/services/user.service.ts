@@ -18,7 +18,11 @@ export class UserService {
     );
   }
 
-  getUserById(): {
-    return this.http.get<User>()
+  getUserById(): Observable<User>{
+    return this.http.get<User>('https://localhost:5001/api/get-by-id/6579ccce1e1cd4933d4189c4').pipe(
+      map(userResponse => {
+        return userResponse;
+      })
+    )
   }
 }
