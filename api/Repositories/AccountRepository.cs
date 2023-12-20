@@ -83,13 +83,15 @@ public class AccountRepository : IAccountRepository
         return null;
     }
 
-    public async Task<UpdateResult?> UpdateAsync(string userId, AppUser appUser, CancellationToken cancellationToken)
+    public async Task<UpdateResult?> UpdateAsync(string userId, RegisterDto userInput, CancellationToken cancellationToken)
     {
+        using var hmac = new HMACSHA512();  
+
         var updatedUser = Builders<AppUser>.Update
-        .Set((AppUser user) => user.Email, appUser.Email.ToLower().Trim())
-        .Set(user => user.PasswordHash, appUser.PasswordHash)
-        .Set(user => user.PasswordSalt, appUser.PasswordSalt)
-        .Set(user => user.City, appUser.City);
+        .Set((AppUser user) => user.Email, userInput.Email.ToLower().Trim())
+        .Set(user => user.PasswordHash, hmac.ComputeHash(Encoding.UTF8.GetBytes(userInput.Password)))
+        .Set(user => user.PasswordSalt, hmac.Key)
+        .Set(user => user.City.StateName, userInput.CityDto.StateName);
 
         if (_collection is not null)
             return await _collection.UpdateOneAsync(userId, updatedUser, null, cancellationToken);
