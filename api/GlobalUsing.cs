@@ -13,3 +13,8 @@ global using Microsoft.Extensions.Options;
 global using api.Controllers.Helpers;
 global using MongoDB.Driver.Core.Operations;
 global using System.Collections.Generic;
+global using System.Text;
+global using api.Services;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.IdentityModel.Tokens;
+global using api.Extensions;
