@@ -20,11 +20,11 @@ export class AccountService {
       map(userResponse => {
         if (userResponse) {
           this.setCurrentUser(userResponse);
-
+         
           this.router.navigateByUrl('/');
 
           return userResponse;
-        } // false
+        } 
 
         return null;
       })
@@ -36,7 +36,7 @@ export class AccountService {
       map(userResponse => {
         if (userResponse) {
           this.setCurrentUser(userResponse);
-
+         
           return userResponse;
         }
 
