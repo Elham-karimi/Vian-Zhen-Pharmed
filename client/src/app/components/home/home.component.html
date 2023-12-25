@@ -1,3 +1,13 @@
 <div class="img">
      <img src="../../../assets/logo/1558669-اسبها-در-گلزارهای-گل-می-دوند.jpg" alt="">
 </div>
+
+<div *ngIf="!user; else logoutSection">
+     <button routerLink="register" mat-raised-button color="accent">Register</button>
+     <button routerLink="login" mat-raised-button color="accent">Login</button>
+</div>
+
+<ng-template #logoutSection>
+     <button (click)="logout()" mat-raised-button color="warn">Logout</button>
+</ng-template>
+
