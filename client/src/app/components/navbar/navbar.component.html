@@ -1,7 +1,26 @@
 <nav>
     <mat-toolbar>
-            <a routerLink="login" class="reglog">ورود/ثبت نام 
-                <mat-icon>person</mat-icon>
-            </a>
-    </mat-toolbar> 
+        <button *ngIf="user; else loginRegisterSection" [mat-menu-trigger-for]="appMenu" class="menu-button"
+            mat-mini-fab>
+            <!-- <button (click)="logout()" mat-raised-button color="warn">Logout</button> -->
+            <span>{{user.email[0] | titlecase}}</span>
+        </button>
+
+        <ng-template #loginRegisterSection class="reglogin">
+            <button routerLink="register" mat-raised-button>ثبت نام</button>
+            <button routerLink="login" mat-raised-button>ورود</button>
+        </ng-template>
+
+        <mat-menu #appMenu [class]="'mat-menu'">
+            <!-- Profile -->
+            <div *ngIf="user" class="user-info">
+                <p>
+                    {{user.email[0] | titlecase}}
+                </p>
+                <div>
+                    <p>{{user.email}}</p>
+                </div>
+            </div>
+        </mat-menu>
+    </mat-toolbar>
 </nav>
