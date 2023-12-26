@@ -18,10 +18,9 @@
         <mat-error *ngIf="PasswordCtrl.hasError('maxlength')">It's too long. Max: 20 characters.</mat-error>
       </mat-form-field>
   
-      <button type="submit" [disabled]="loginFg.invalid"  mat-raised-button color="primary">Login</button>
+      <button type="submit" [disabled]="loginFg.invalid"  mat-raised-button color="primary">ورود</button>
       
-      <a routerLink="/register">ثبت نام کاربر جدید</a>
-      <!-- Other Errors -->
+           <!-- Other Errors -->
       <p *ngIf="apiErrorMessage">{{apiErrorMessage}}</p>
     </div>
   </form>
