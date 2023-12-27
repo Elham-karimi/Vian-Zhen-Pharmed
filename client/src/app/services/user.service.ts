@@ -11,30 +11,24 @@ export class UserService {
 
   constructor(private http: HttpClient, private accountService : AccountService) { }
 
-  getAllUsers(): Observable<User[]> {
-    let requestOptions;
+  getAllUsers(): Observable<User[] | null> {
+      return this.http.get<User[]>('https://localhost:5001/api/user').pipe(
+      map((users: User[]) => {
+        if (users)
+          return users;
 
-    this.accountService.currentUser$.pipe(take(1)).subscribe({
-      next: currentUser => {
-          if(currentUser){
-            requestOptions = {
-              headers : new HttpHeaders ({'Authorization' : `Bearer ${currentUser.token}`})
-            }
-          }
-      }
-    });
-    
-    return this.http.get<User[]>('https://localhost:5001/api/user',requestOptions).pipe(
-      map(users => {
-        return users;
+        return null;
       })
     );
   }
 
-  getUserById(): Observable<User>{
+  getUserById(): Observable<User | null>{
     return this.http.get<User>('https://localhost:5001/api/get-by-id/6579ccce1e1cd4933d4189c4').pipe(
-      map(userResponse => {
-        return userResponse;
+      map((user: User | null) => {
+        if (user)
+          return user;
+
+        return null;
       })
     )
   }
