@@ -21,6 +21,33 @@
                     <p>{{user.email}}</p>
                 </div>
             </div>
+            <!-- Navigation -->
+            <mat-divider></mat-divider>
+            <mat-list>
+                <mat-list-item>
+                    <div routerLink="/member/edit" mat-button class="menu-items">
+                        <mat-icon>edit_note</mat-icon>
+                        Edit Profile
+                    </div>
+                </mat-list-item>
+                <mat-list-item [routerLink]="['/member/get-all']" routerLinkActive="router-link-active">
+                    <div class="menu-items">
+                        <mat-icon>flaky</mat-icon>
+                        All Members
+                    </div>
+                </mat-list-item>
+                <mat-list-item [routerLink]="['/message/inbox']" routerLinkActive="router-link-active">
+                    <div class="menu-items">
+                        <mat-icon>assignment_returned</mat-icon>
+                        Messages
+                    </div>
+                </mat-list-item>
+            </mat-list>
+
+            <mat-divider></mat-divider>
+            <div class="logout">
+                <button mat-raised-button (click)="logout()">Logout</button>
+            </div>
         </mat-menu>
     </mat-toolbar>
 </nav>
