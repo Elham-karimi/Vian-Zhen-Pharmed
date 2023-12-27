@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace api.Controllers;
 
+[Authorize]
 public class UserController : BaseApiController 
 {
     private readonly IUserRepository _userRepository;
