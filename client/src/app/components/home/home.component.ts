@@ -9,7 +9,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  allUsers: User[] | undefined;
+  allUsers: User[] | null | undefined;
   user: User | null | undefined;
 
   constructor(private userService: UserService, private accountService: AccountService) { }
