@@ -67,7 +67,7 @@
           "options": {
             "sslCert": "./ssl/server.crt",
             "sslKey": "./ssl/server.key",
-            "ssl": true
+            "ssl": false
           },
           "configurations": {
             "production": {

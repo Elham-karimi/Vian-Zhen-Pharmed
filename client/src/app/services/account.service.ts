@@ -16,7 +16,7 @@ export class AccountService {
   constructor(private http: HttpClient, private router: Router) { }
 
   registerUser(userInput: RegisterUser): Observable<User | null> {
-    return this.http.post<User>('https://localhost:5001/api/account/register', userInput).pipe(
+    return this.http.post<User>('http://localhost:5000/api/account/register', userInput).pipe(
       map(userResponse => {
         if (userResponse) {
           this.setCurrentUser(userResponse);
@@ -32,7 +32,7 @@ export class AccountService {
   }
 
   loginUser(userInput: LoginUser): Observable<User | null> {
-    return this.http.post<User>('https://localhost:5001/api/account/login', userInput).pipe(
+    return this.http.post<User>('http://localhost:5000/api/account/login', userInput).pipe(
       map(userResponse => {
         if (userResponse) {
           this.setCurrentUser(userResponse);

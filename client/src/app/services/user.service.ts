@@ -12,7 +12,7 @@ export class UserService {
   constructor(private http: HttpClient, private accountService : AccountService) { }
 
   getAllUsers(): Observable<User[] | null> {
-      return this.http.get<User[]>('https://localhost:5001/api/user').pipe(
+      return this.http.get<User[]>('http://localhost:5000/api/user').pipe(
       map((users: User[]) => {
         if (users)
           return users;
@@ -23,7 +23,7 @@ export class UserService {
   }
 
   getUserById(): Observable<User | null>{
-    return this.http.get<User>('https://localhost:5001/api/get-by-id/6579ccce1e1cd4933d4189c4').pipe(
+    return this.http.get<User>('http://localhost:5000/api/get-by-id/6579ccce1e1cd4933d4189c4').pipe(
       map((user: User | null) => {
         if (user)
           return user;
