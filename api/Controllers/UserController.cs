@@ -3,17 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 namespace api.Controllers;
 
 [Authorize]
-public class UserController : BaseApiController 
+public class UserController(IUserRepository _userRepository) : BaseApiController 
 {
-    private readonly IUserRepository _userRepository;
-
-    #region Constructor Section
-  
-    public UserController(IUserRepository userRepository)
-    {
-        _userRepository = userRepository;
-    }
-    #endregion
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UserDto>>> GetAll(CancellationToken cancellationToken)
