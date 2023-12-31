@@ -19,9 +19,7 @@ export class AccountService {
     return this.http.post<User>('http://localhost:5000/api/account/register', userInput).pipe(
       map(userResponse => {
         if (userResponse) {
-          this.setCurrentUser(userResponse);
-         
-          this.router.navigateByUrl('/');
+          this.setCurrentUser(userResponse); 
 
           return userResponse;
         } 
@@ -49,6 +47,8 @@ export class AccountService {
     this.currentUserSource.next(user);
 
     localStorage.setItem('user', JSON.stringify(user));
+
+    this.router.navigateByUrl('/');
   }
 
   logoutUser(): void {
