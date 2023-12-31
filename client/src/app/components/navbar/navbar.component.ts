@@ -5,6 +5,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconRegistry } from '@angular/material/icon';
 import { AccountService } from 'src/app/services/account.service';
 import { User } from 'src/app/models/user.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -12,14 +13,13 @@ import { User } from 'src/app/models/user.model';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit{
-user : User | null | undefined;
+// user : User | null | undefined;
+user$ : Observable<User | null> | undefined;
 
   constructor(private accountService : AccountService) {}
 
   ngOnInit(): void {
-   this.accountService.currentUser$.subscribe({
-      next: response => this.user = response
-    })
+  this.user$ = this.accountService.currentUser$;
   }
 
   logout(): void {
