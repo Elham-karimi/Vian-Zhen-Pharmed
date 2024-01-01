@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginUser } from 'src/app/models/login-user.model';
+import { User } from 'src/app/models/user.model';
 import { AccountService } from 'src/app/services/account.service';
 
 
@@ -40,9 +41,8 @@ export class LoginComponent {
     }
 
     this.accountService.loginUser(user).subscribe({
-      next: user => {
+      next: (user : User | null)=> {
         console.log(user);
-        this.router.navigateByUrl('/');
       },
       error: err => this.apiErrorMessage = err.error
     })
