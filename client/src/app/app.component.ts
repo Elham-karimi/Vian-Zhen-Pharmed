@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from './models/user.model';
 import { AccountService } from './services/account.service';
-// import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
+  standalone : true,
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],

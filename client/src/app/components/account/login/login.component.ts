@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Router } from 'express';
 import { LoginUser } from '../../../models/login-user.model';
 import { User } from '../../../models/user.model';
 import { AccountService } from '../../../services/account.service';
@@ -11,7 +11,11 @@ import { AccountService } from '../../../services/account.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports : []
+  imports : [
+    CommonModule, FormsModule, ReactiveFormsModule, 
+    MatFormFieldModule, MatInputModule, MatButtonModule,
+    MatSnackBarModule
+  ]
 })
 export class LoginComponent {
   apiErrorMessage: string | undefined;
