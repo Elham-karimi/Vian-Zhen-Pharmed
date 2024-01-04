@@ -32,6 +32,6 @@ export const routes: Routes = [
     {path: 'vian-ambassadors', component : VianAmbassadorsComponent},
     {path: 'contactus' , component : ContactusComponent},
     {path: 'aboutus',component: AboutusComponent},
-    {path: 'no-access', component: NoAccessComponent},//gaurd
+    {path: 'no-access', component: NoAccessComponent},
     {path: '**', component: NotFoundComponent}
   ];
