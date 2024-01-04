@@ -4,9 +4,10 @@ import { Route } from '@angular/router';
 import { Router } from '@angular/router';
 
 @Component({
+  standalone : true,
   selector: 'app-aboutus',
   templateUrl: './aboutus.component.html',
-  styleUrls: ['./aboutus.component.scss']
+  styleUrls: ['./aboutus.component.scss'],
 })
 export class AboutusComponent {
  

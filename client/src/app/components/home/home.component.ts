@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { User } from 'src/app/models/user.model';
-import { AccountService } from 'src/app/services/account.service';
-import { UserService } from 'src/app/services/user.service';
+import { User } from '../../models/user.model';
+import { AccountService } from '../../services/account.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   standalone : true,

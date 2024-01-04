@@ -1,15 +1,17 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginUser } from 'src/app/models/login-user.model';
-import { User } from 'src/app/models/user.model';
-import { AccountService } from 'src/app/services/account.service';
+import { LoginUser } from '../../../models/login-user.model';
+import { User } from '../../../models/user.model';
+import { AccountService } from '../../../services/account.service';
 
 
 @Component({
+  standalone : true,
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  imports : []
 })
 export class LoginComponent {
   apiErrorMessage: string | undefined;
