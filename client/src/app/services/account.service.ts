@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { User } from '../models/user.model';
 import { RegisterUser } from '../models/register-user.model';
@@ -12,8 +12,9 @@ import { LoginUser } from '../models/login-user.model';
 export class AccountService {
   private currentUserSource = new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUserSource.asObservable();
+  private http = inject(HttpClient); 
+  private router = inject(Router);
 
-  constructor(private http: HttpClient, private router: Router) { }
 
   registerUser(userInput: RegisterUser): Observable<User | null> {
     return this.http.post<User>('http://localhost:5000/api/account/register', userInput).pipe(
@@ -48,7 +49,7 @@ export class AccountService {
 
     localStorage.setItem('user', JSON.stringify(user));
 
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('');
   }
 
   logoutUser(): void {
@@ -56,6 +57,6 @@ export class AccountService {
 
     localStorage.removeItem('user');
 
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('account/login');
   }
 }

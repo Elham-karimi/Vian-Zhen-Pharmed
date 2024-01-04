@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { City } from '../../../models/city.model';
 import { RegisterUser } from '../../../models/register-user.model';
@@ -15,8 +15,8 @@ export class RegisterComponent {
   passowrdsNotMatch: boolean | undefined;
   apiErrorMessage: string | undefined;
   cities: City[] | undefined;
-
-  constructor(private fb: FormBuilder, private accountService: AccountService) { }
+  private fb = inject(FormBuilder);
+  private accountService =inject(AccountService);
 
   //#region Create Form Group/controler (AbstractControl)
   registerFg = this.fb.group({

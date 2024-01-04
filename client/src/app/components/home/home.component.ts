@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { User } from '../../models/user.model';
 import { AccountService } from '../../services/account.service';
@@ -14,8 +14,9 @@ export class HomeComponent{
   allUsers: User[] | null | undefined;
   // subscription : Subscription | undefined;
  allUsers$ : Observable<User[] | null> | undefined;
+ private userService = inject(UserService);
+ private accountService = inject(AccountService); 
 
-  constructor(private userService: UserService, private accountService: AccountService) { }
 
   // ngOnDestroy(): void {
   //     this.subscription?.unsubscribe();

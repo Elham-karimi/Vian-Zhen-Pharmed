@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 // import { MatIconModule } from '@angular/material/icon';
 // import { MatButtonModule } from '@angular/material/button';
 // import { MatToolbarModule } from '@angular/material/toolbar';
@@ -18,8 +18,7 @@ import { AccountService } from '../../services/account.service';
 export class NavbarComponent implements OnInit{
 // user : User | null | undefined;
 user$ : Observable<User | null> | undefined;
-
-  constructor(private accountService : AccountService) {}
+private accountService = inject(AccountService);
 
   ngOnInit(): void {
   this.user$ = this.accountService.currentUser$;

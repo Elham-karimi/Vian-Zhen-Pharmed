@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginUser } from '../../../models/login-user.model';
 import { User } from '../../../models/user.model';
 import { AccountService } from '../../../services/account.service';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -11,12 +12,18 @@ import { AccountService } from '../../../services/account.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports : []
+  imports : [
+    CommonModule, FormsModule, ReactiveFormsModule, 
+    MatFormFieldModule, MatInputModule, MatButtonModule,
+    MatSnackBarModule
+  ]
 })
 export class LoginComponent {
   apiErrorMessage: string | undefined;
+  private accountService = inject(AccountService);
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
 
-  constructor(private accountService: AccountService, private fb: FormBuilder, private router: Router) { }
 
   //#region FormGroup
   loginFg: FormGroup = this.fb.group({
