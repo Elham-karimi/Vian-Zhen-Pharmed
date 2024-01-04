@@ -1,16 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from './models/user.model';
 import { AccountService } from './services/account.service';
-import { NavbarComponent } from "./components/navbar/navbar.component";
-import { HeaderComponent } from "./components/header/header.component";
-import { ElementorSpacerComponent } from "./components/elementor-spacer/elementor-spacer.component";
+// import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-    standalone: true,
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    imports: [NavbarComponent, HeaderComponent, ElementorSpacerComponent]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   constructor(private accountService: AccountService) { }

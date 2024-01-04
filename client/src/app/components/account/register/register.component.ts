@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { City } from '../../../models/city.model';
-import { RegisterUser } from '../../../models/register-user.model';
-import { AccountService } from '../../../services/account.service';
+import { City } from 'src/app/models/city.model';
+import { AccountService } from 'src/app/services/account.service';
+import { RegisterUser } from 'src/app/models/register-user.model';
 
 @Component({
-  standalone : true,
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']

@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 
 
 @Component({
-  standalone : true,
   selector: 'app-image-slider',
   templateUrl: './image-slider.component.html',
   styleUrls: ['./image-slider.component.scss']

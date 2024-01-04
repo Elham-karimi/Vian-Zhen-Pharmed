@@ -1,24 +1,15 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Router } from 'express';
-import { LoginUser } from '../../../models/login-user.model';
-import { User } from '../../../models/user.model';
-import { AccountService } from '../../../services/account.service';
-import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { LoginUser } from 'src/app/models/login-user.model';
+import { User } from 'src/app/models/user.model';
+import { AccountService } from 'src/app/services/account.service';
 
 
 @Component({
-  standalone : true,
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  imports :  [
-    CommonModule, FormsModule, ReactiveFormsModule, 
-    MatFormFieldModule, MatInputModule, MatButtonModule,
-    MatSnackBarModule
-  ]
-    
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
   apiErrorMessage: string | undefined;

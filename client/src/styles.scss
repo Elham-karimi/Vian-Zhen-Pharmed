@@ -1,4 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
-
+@font-face {
+    font-family: 'nazanin';
+    src: url('../src/assets/Fonts/Nazanin.eot');
+}
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+    margin: 0; 
+    font-family: 'nazanin';
+    padding: 0px;   
+    font-size: 20px; 
+}
