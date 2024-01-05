@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, NgModule, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginUser } from '../../../models/login-user.model';
@@ -7,15 +7,16 @@ import { AccountService } from '../../../services/account.service';
 import { CommonModule } from '@angular/common';
 
 
+
+
 @Component({
   standalone : true,
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports : [
-    CommonModule, FormsModule, ReactiveFormsModule, 
-    MatFormFieldModule, MatInputModule, MatButtonModule,
-    MatSnackBarModule
+  imports :[
+    CommonModule, FormsModule, ReactiveFormsModule,
+    
   ]
 })
 export class LoginComponent {
