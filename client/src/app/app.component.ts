@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, PLATFORM_ID, inject } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { User } from './models/user.model';
 import { AccountService } from './services/account.service';
@@ -12,14 +12,19 @@ import { AccountService } from './services/account.service';
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
-  constructor(private accountService: AccountService) { }
-  
+  [x: string]: any;
+  private accountService = inject(AccountService);
+  platformId = inject(PLATFORM_ID);
+
   ngOnInit(): void {
     this.getLocalStorageCurrentValues();
   }
- 
+
   getLocalStorageCurrentValues(): void {
-    const userString: string | null = localStorage.getItem('user');
+    let userString: string | null = null;
+
+    if (isPlatformBrowser(this.platformId))
+      userString = localStorage.getItem('user');
 
     if (userString) {
       const user: User = JSON.parse(userString);
